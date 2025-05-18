@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task - 2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    .container {
+      display: grid;
+      grid-template-areas: 
+        "nav nav"
+        "main aside";
+      grid-template-columns:1fr;
+      gap: 20px;
+    }
+
+    nav {
+      grid-area: nav;
+      background: #008cba;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      grid-area: main;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    aside {
+      grid-area: aside;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="submit"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #todoList li {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+
+    button.remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 2px 6px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-areas:
+          "nav"
+          "main"
+          "aside";
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav><h2>My Web App</h2></nav>
+    
+    <main>
+      <h3>Contact Form</h3>
+      <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <input type="submit" value="Submit">
+      </form>
+
+      <h3>To-Do List</h3>
+      <input type="text" id="todoInput" placeholder="Add a task">
+      <button onclick="addTodo()">Add</button>
+      <ul id="todoList"></ul>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      if (!name || !email.includes("@")) {
+        alert("Please enter a valid name and email.");
+        e.preventDefault();
+      }
+    });
+
+    function addTodo() {
+      const input = document.getElementById("todoInput");
+      const text = input.value.trim();
+      if (text === "") return;
+
+      const li = document.createElement("li");
+      li.textContent = text;
+
+      const btn = document.createElement("button");
+      btn.textContent = "X";
+      btn.className = "remove-btn";
+      btn.onclick = function () {
+        this.parentElement.remove();
+      };
+
+      li.appendChild(btn);
+      document.getElementById("todoList").appendChild(li);
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
